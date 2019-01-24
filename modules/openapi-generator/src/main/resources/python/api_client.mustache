@@ -251,6 +251,14 @@ class ApiClient(object):
         except UnicodeDecodeError:
             # probably data is a binary content itself
             data = response.data
+
+            # HACK: remove when issues resolved
+            # https://github.com/OpenAPITools/openapi-generator/issues/206
+            # https://github.com/OpenAPITools/openapi-generator/issues/1445
+            if (six.PY3 and response_type == 'str' and response.getheader('Content-Type') == 'application/octet-stream'):
+                return response.data
+
+
         except ValueError:
             # failed to fetch data from response object
             pass
