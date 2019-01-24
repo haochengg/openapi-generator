@@ -244,7 +244,7 @@ class ApiClient(object):
         if response_type == "file":
             return self.__deserialize_file(response)
 
-        try
+        try:
             data = response.data.decode('utf-8')
             # fetch data from response object
             data = json.loads(data)
